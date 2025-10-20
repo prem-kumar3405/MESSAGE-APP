@@ -95,4 +95,83 @@ class DatabaseConnection {
 
         return false;
     }
+    public static  boolean sendmessage(String sender,String receiver,String text)
+    {
+
+        if(!userexists(receiver))
+        {
+            System.out.println("User not found");
+            return false;
+        }
+        String query="INSERT INTO message( sender,receiver,message) values(?,?,?)";
+
+         try{
+             Connection con = getconnection();
+             PreparedStatement ps= con.prepareStatement(query);
+             ps.setString(1,sender);
+             ps.setString(2,receiver);
+             ps.setString(3,text);
+
+             int row=ps.executeUpdate();
+
+             if(row>0)
+             {
+                 System.out.println("Message sends successfully");
+                 return true;
+             }
+         }
+         catch (Exception e)
+         {
+             System.out.println(e);
+         }
+        return false;
+    }
+
+    public static  boolean userexists(String receiver)
+    {
+        String query="SELECT * FROM user where name = ?";
+        try{
+            Connection con = getconnection();
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setString(1,receiver);
+
+            ResultSet rs = ps.executeQuery();
+            return rs.next();
+        }
+        catch (Exception e)
+        {
+            System.out.println(e);
+        }
+        return false;
+    }
+    public static void viewchat(String sender,String receiver)
+    {
+        String query = "SELECT sender, message, mstime FROM message " +
+                "WHERE (sender = ? AND receiver = ?) OR (sender = ? AND receiver = ?) " +
+                "ORDER BY mstime";
+
+        try{
+            Connection con = getconnection();
+            PreparedStatement ps= con.prepareStatement(query);
+
+            ps.setString(1,sender);
+            ps.setString(2,receiver);
+            ps.setString(3,receiver);
+            ps.setString(4,sender);
+
+            ResultSet rs= ps.executeQuery();
+            System.out.println("----- Chat History -----");
+            while (rs.next())
+            {
+                System.out.println(rs.getString("sender") +": "+rs.getString("message")+"(" + rs.getTimestamp("mstime")+")");
+
+            }
+            System.out.println("______________________________________");
+
+        }
+        catch (Exception e)
+        {
+            System.out.println("Error in fectching the chat"+e.getMessage());
+        }
+    }
 }

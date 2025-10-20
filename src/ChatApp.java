@@ -21,6 +21,7 @@ class ChatApp {
                 case 1:
                 {
                     System.out.println("Send message");
+                    message();
                     break;
                 }
                 case 2:
@@ -45,6 +46,34 @@ class ChatApp {
                 }
             }
 
+        }
+    }
+    public static  void message()
+    {
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Enter the sender name");
+        String sender=scan.next();
+
+        System.out.println("Enter the receiver name");
+        String receiver = scan.next();
+
+        System.out.println("Enter the message you want to send ");
+        String message = scan.nextLine();
+
+        boolean ans=DatabaseConnection.sendmessage(sender,receiver,message);
+        if(ans)
+        {
+            System.out.println("if you want to see all the message");
+            System.out.println("Enter 1");
+            
+            int n = scan.nextInt();
+            if(n==1)
+            {
+                DatabaseConnection.viewchat(sender,receiver);
+            }
+        }
+        else {
+            System.out.println("Message not send");
         }
     }
 }
