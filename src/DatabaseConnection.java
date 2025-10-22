@@ -174,4 +174,9 @@ class DatabaseConnection {
             System.out.println("Error in fectching the chat"+e.getMessage());
         }
     }
+    public static boolean updatestatus(String sender)
+    {
+        String sql="Insert into status where";
+        return false;
+    }
 }
