@@ -176,7 +176,13 @@ class DatabaseConnection {
     }
     public static boolean updatestatus(String sender)
     {
-        String sql="Insert into status where";
+        String sql="set ";
         return false;
     }
+    public  static String viewStatus(String user)
+    {
+        String status="";
+        return status;
+    }
+
 }
