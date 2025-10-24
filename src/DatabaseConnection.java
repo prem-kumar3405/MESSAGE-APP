@@ -177,11 +177,37 @@ class DatabaseConnection {
     public static boolean updatestatus(String sender)
     {
         String sql="set ";
+        try{
+            Connection con= getconnection();
+            PreparedStatement ps=con.prepareStatement(sql);
+            ps.executeUpdate();
+        }
+        catch (Exception e)
+        {
+            System.out.println(e);
+        }
+
+
         return false;
     }
-    public  static String viewStatus(String user)
+    public  static String viewStatus(String user,String status)
     {
-        String status="";
+        String query="";
+        try
+        {
+            Connection con =getconnection();
+            PreparedStatement ps= con.prepareStatement(query);
+            ResultSet rs= ps.executeQuery();
+            while (rs.next())
+            {
+                System.out.println(rs.getString(1));
+            }
+
+        }
+        catch (Exception e)
+        {
+
+        }
         return status;
     }
 
