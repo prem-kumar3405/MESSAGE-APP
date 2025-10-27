@@ -211,5 +211,9 @@ class DatabaseConnection {
         }
         return status;
     }
+    public static void updatetable()
+    {
+        System.out.println("going to use the indexing concept for the quer optmization");
+    }
 
 }
